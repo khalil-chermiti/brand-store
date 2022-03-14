@@ -13,11 +13,19 @@
   font-weight: bolder;
   border: none;
   cursor: pointer;
-  font-family: 'Montserrat'; 
+  font-family: "Montserrat";
 
   &:hover {
     background-color: white;
     color: black;
     border: 1px solid black;
+  }
+  &.google-signin {
+    background-color: #4285f4;
+    color: white;
+  }
+  &.google-signin:hover {
+    background-color: #357ae8;
+    border: none;
   }
 }
