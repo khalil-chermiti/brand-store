@@ -23,18 +23,19 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   const snapShot = await userRef.get();
 
   if (!snapShot.exists) {
-    const { displayName, email } = userAuth;
+    const { displayName , email } = userAuth;
+    
     const createdAt = new Date();
 
     try {
       await userRef.set({
-        displayName,
+        displayName ,
         email,
-        createdAt,
-        ...additionalData,
+        createdAt ,
+        ...additionalData ,
       });
     } catch (err) {
-      alert("error saving user" + err);
+      alert("error saving user : " + err);
     }
   }
 

@@ -38,11 +38,11 @@ class SignIn extends React.Component {
           />
 
           <FormInput
-            name="email"
-            type="email"
+            name="password"
+            type="password"
             value={this.state.password}
             handleChange={this.handleChange}
-            label="Email"
+            label="password"
             required
           />
 
