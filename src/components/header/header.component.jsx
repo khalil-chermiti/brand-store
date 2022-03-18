@@ -2,6 +2,8 @@ import React from 'react' ;
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 
+import { connect } from 'react-redux';
+
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.style.scss';
 
@@ -32,4 +34,9 @@ const Header = ({ currentUser }) => (
   </div>
 );
 
-export default Header ;
+// returning the values that we want from the state (currentUser in this case)
+const mapState = (state) => ({
+  currentUser : state.user.currentUser
+})
+
+export default connect(mapState)(Header) ;
