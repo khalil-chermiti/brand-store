@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route , Navigate} from "react-router-dom";
 import { connect } from "react-redux";
 import setCurrentUser from "./redux/user /user.actions";
 
@@ -10,6 +10,7 @@ import SignINandUpPage from "./pages/signingpage/signing.component";
 
 import "./App.css";
 import { auth , createUserProfileDocument} from "./firebase/firebase.utils";
+
 class App extends React.Component {
 
   unSubscribeFromAuth = null;
@@ -17,7 +18,7 @@ class App extends React.Component {
   componentDidMount() {
 
     // distructuring currentUser from props
-    const {currentUser} = this.props ;
+    const {setCurrentUser} = this.props ;
 
     // OnAuthStateChange  returns a unsubscribe function 
     this.unSubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
@@ -29,7 +30,7 @@ class App extends React.Component {
         
         // on snapshot change we update state
         userRef.onSnapshot(snapShot => {
-            currentUser({
+            setCurrentUser({
               id: snapShot.id ,
               ...snapShot.data()
             })
@@ -38,7 +39,7 @@ class App extends React.Component {
       }
       
       // if we get null object from firebase (user logged out or unsigned in)
-      currentUser(user) ;
+      setCurrentUser(user) ;
     });
   } 
 
@@ -49,11 +50,20 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header/>
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
-          <Route path="/signin" element={<SignINandUpPage />} />
+          <Route
+            path="/signin"
+            element={
+              this.props.currentUser ? (
+                <Navigate to="/" replace={true} />
+              ) : (
+                <SignINandUpPage />
+              )
+            }
+          />
         </Routes>
       </div>
     );
@@ -62,7 +72,12 @@ class App extends React.Component {
 
 // dispatching actions to props
 const mapDispatch = (dispatch) => ({
-  currentUser: (user) => dispatch(setCurrentUser(user)),
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-export default connect(null, mapDispatch)(App);
+// get user object for conditionally render the signin page
+const mapState = ({user}) => ({
+  currentUser : user.currentUser ,
+})
+
+export default connect(mapState, mapDispatch)(App);
