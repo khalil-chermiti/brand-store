@@ -14,18 +14,33 @@
   border: none;
   cursor: pointer;
   font-family: "Montserrat";
+  display: flex ; 
+  justify-content: center;
 
   &:hover {
     background-color: white;
     color: black;
     border: 1px solid black;
   }
+
   &.google-signin {
     background-color: #4285f4;
     color: white;
+    &:hover {
+      background-color: #357ae8;
+      border: none;
+    }
   }
-  &.google-signin:hover {
-    background-color: #357ae8;
-    border: none;
+
+  &.inverted {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+
+    &:hover {
+      background-color: black;
+      color: white;
+      border: none;
+    }
   }
 }
