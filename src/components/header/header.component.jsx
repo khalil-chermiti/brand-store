@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from '../../redux/user /user.selectors';
+import { selectIsCartHidden } from '../../redux/cart/cart.selectors';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import CartButton from '../cart-button/cart-button.components';
@@ -40,9 +43,9 @@ const Header = ({ currentUser , isCartHidden }) => (
 );
 
 // returning the values that we want from the state (currentUser in this case)
-const mapState = ({user : {currentUser} , cart : {hidden}}) => ({
-  currentUser : currentUser ,
-  isCartHidden : hidden ,
+const mapState = createStructuredSelector({
+  currentUser : selectCurrentUser,
+  isCartHidden : selectIsCartHidden ,
 })
 
 export default connect(mapState)(Header) ;
