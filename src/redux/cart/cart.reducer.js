@@ -1,4 +1,5 @@
 import { cartTypes } from "./cart.types";
+import { addItemToCart } from "./cart.utils";
 
 const INITIAL_STATE = {
   hidden: true,
@@ -8,6 +9,7 @@ const INITIAL_STATE = {
 const cartReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
 
+    // ! toggle cart
     case cartTypes.TOGGLE_CART:
       
       return {
@@ -15,10 +17,13 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         hidden: !state.hidden,
       };
 
+    
+    // ! add item to chart
     case cartTypes.ADD_ITEM:
+      
       return {
         ...state,
-        items:[...state.items , action.payload],
+        items:addItemToCart(state.items , action.payload),
       }
       
     default:
