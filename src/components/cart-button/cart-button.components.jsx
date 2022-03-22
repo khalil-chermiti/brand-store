@@ -8,14 +8,14 @@ import {ReactComponent as ShoppingIcon} from '../../assets/shopping-bag.svg' ;
 import './cart-button.style.scss' ;
 
 const CartButton = ({toggleCartDropdown , getItemsCount}) => (
-    <div className='cart-icon'>
-        <ShoppingIcon className="shopping-icon" onClick={toggleCartDropdown}/>
+    <div className='cart-icon'  onClick={toggleCartDropdown}>
+        <ShoppingIcon className="shopping-icon"/>
         <span className='item-count'>{getItemsCount}</span>
     </div>
 );
 
 const mapDispatch = dispatch => ({
-    toggleCartDropdown : () => dispatch(toggleCart()),
+    toggleCartDropdown : (event) => dispatch(toggleCart()),
 }) ;
 
 const mapState = (state) => ({

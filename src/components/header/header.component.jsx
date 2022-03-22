@@ -5,7 +5,7 @@ import { auth } from '../../firebase/firebase.utils';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectCurrentUser } from '../../redux/user /user.selectors';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { selectIsCartHidden } from '../../redux/cart/cart.selectors';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';

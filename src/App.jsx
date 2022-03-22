@@ -1,12 +1,14 @@
 import React from "react";
 import { Routes, Route , Navigate} from "react-router-dom";
+
 import { connect } from "react-redux";
-import setCurrentUser from "./redux/user /user.actions";
+import setCurrentUser from "./redux/user/user.actions";
 
 import Header from "./components/header/header.component";
 import HomePage from "./pages/homepage/homePage.component";
 import ShopPage from "./pages/shoppage/shop.component";
 import SignINandUpPage from "./pages/signingpage/signing.component";
+import CheckoutPage from "./pages/checkoutpage/checkout.component";
 
 import "./App.css";
 import { auth , createUserProfileDocument} from "./firebase/firebase.utils";
@@ -52,8 +54,11 @@ class App extends React.Component {
       <div>
         <Header />
         <Routes>
+
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+
           <Route
             path="/signin"
             element={
@@ -64,6 +69,7 @@ class App extends React.Component {
               )
             }
           />
+          
         </Routes>
       </div>
     );

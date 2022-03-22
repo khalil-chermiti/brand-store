@@ -21,3 +21,10 @@ export const selectIsCartHidden = createSelector(
     selectCart , 
     (cart) => cart.hidden 
 )
+
+// ! select the total cost 
+
+export const selectCartTotatl = createSelector(
+    [selectCartItems] ,
+    (items) => items.reduce((acc , item) => {return acc + item.price * item.quantity }, 0)
+)
