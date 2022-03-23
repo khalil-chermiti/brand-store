@@ -7,10 +7,13 @@ const MenuItem = ({ title, size, imageUrl , linkUrl}) => {
   const {pathname} = useLocation() ;
   const navigate = useNavigate();
 
+  console.log(pathname) ;
+  
+
   return (
     <div 
       className={`menu-item ${size}`}
-      onClick={()=> navigate(pathname + linkUrl)}
+      onClick={()=> navigate(linkUrl)}
     >
       <div
         className="bg-image"
