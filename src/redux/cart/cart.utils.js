@@ -14,3 +14,21 @@ export const addItemToCart = (cartItems , cartItemToAdd) => {
     // if no item was found we return an array with the new item quantity set to 1
     return [...cartItems , {...cartItemToAdd , quantity : 1}] ;  
 }
+
+export const decreaseItemCount = (cartItems, itemToDecrease) => {
+
+  // find item to decrease
+  const existingCartItem = cartItems.find(cartItem => cartItem.id === itemToDecrease.id);
+
+  // if quantity is 1 remove the item
+  if (existingCartItem.quantity === 1) {
+    return cartItems.filter((cartItem) => cartItem.id !== itemToDecrease.id);
+  }
+
+  // else decrease quantity by one
+  return cartItems.map((cartItem) =>
+    cartItem.id === itemToDecrease.id
+      ? { ...cartItem, quantity: --cartItem.quantity }
+      : cartItem
+  );
+};

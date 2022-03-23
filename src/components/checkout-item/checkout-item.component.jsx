@@ -1,11 +1,11 @@
 import React from 'react' ;
 
 import {connect} from 'react-redux' ;
-import { removeItem } from '../../redux/cart/cart.actions';
+import { removeItem , addItem , decreaseItemCount} from '../../redux/cart/cart.actions';
 
 import './checkout-item.style.scss' 
 
-const CheckoutItem = ({cartItem , clearItem}) => {
+const CheckoutItem = ({cartItem , clearItem , addItem , decreaseItemCount}) => {
 
     const {name , imageUrl , price , quantity} = cartItem
 
@@ -19,9 +19,13 @@ const CheckoutItem = ({cartItem , clearItem}) => {
         <span className='name'>{name}</span>
 
         <span className='quantity'>
-            <div className='arrow'>&#10094;</div>
+
+            <div className='arrow' onClick={()=> decreaseItemCount(cartItem)}>&#10094;</div>
+
             <span className='value'>{quantity}</span>
-            <div className='arrow'>&#10095;</div>
+
+            <div className='arrow' onClick={() => addItem(cartItem)}>&#10095;</div>
+
         </span>
 
         <span className='price'>{price}</span>
@@ -37,6 +41,8 @@ const CheckoutItem = ({cartItem , clearItem}) => {
 
 const mapDispatch = dispatch => ({
     clearItem : (item) => dispatch(removeItem(item)),
+    addItem : (item) => dispatch(addItem(item)),
+    decreaseItemCount : (item) => dispatch(decreaseItemCount(item)),
 })
 
 export default connect(null , mapDispatch)(CheckoutItem) ;
