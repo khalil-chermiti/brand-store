@@ -42,6 +42,24 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef ;
 };
 
+// this util function is used to programmatically add collections and documents to firebase 
+
+export const addDocumentsAndCollections = async (collectionName , objectsToAdd) => {
+
+  const collectionRef = firestore.collection(collectionName);
+
+  const batch = firestore.batch() ;
+
+  // batch adding data to collection document
+  objectsToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc() ;
+    batch.set(newDocRef , obj);
+  })
+  
+  return await batch.commit();
+}
+
+
 firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth() ;

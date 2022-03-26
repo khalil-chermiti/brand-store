@@ -2,7 +2,9 @@ import React from "react";
 import { Routes, Route , Navigate} from "react-router-dom";
 
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 import setCurrentUser from "./redux/user/user.actions";
+import { selectCurrentUser } from "./redux/user/user.selectors";
 
 import Header from "./components/header/header.component";
 import HomePage from "./pages/homepage/homePage.component";
@@ -11,7 +13,7 @@ import SignINandUpPage from "./pages/signingpage/signing.component";
 import CheckoutPage from "./pages/checkoutpage/checkout.component";
 
 import "./App.css";
-import { auth , createUserProfileDocument} from "./firebase/firebase.utils";
+import { auth , createUserProfileDocument } from "./firebase/firebase.utils";
 
 class App extends React.Component {
 
@@ -50,11 +52,11 @@ class App extends React.Component {
   }
 
   render() {
+    const {currentUser} = this.props ;
     return (
       <div>
         <Header />
         <Routes>
-
           <Route path="/" element={<HomePage />} />
           <Route path="shop/*" element={<ShopPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
@@ -62,14 +64,13 @@ class App extends React.Component {
           <Route
             path="signin"
             element={
-              this.props.currentUser ? (
+              currentUser ? (
                 <Navigate to="/" replace={true} />
               ) : (
                 <SignINandUpPage />
               )
             }
           />
-          
         </Routes>
       </div>
     );
@@ -82,8 +83,8 @@ const mapDispatch = (dispatch) => ({
 });
 
 // get user object for conditionally render the signin page
-const mapState = ({user}) => ({
-  currentUser : user.currentUser ,
+const mapState = createStructuredSelector({
+  currentUser : selectCurrentUser ,
 })
 
 export default connect(mapState, mapDispatch)(App);
