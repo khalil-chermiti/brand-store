@@ -11,11 +11,21 @@ import CollectionPage from "../collectionpage/collection.component";
 
 import "./shop.style.scss";
 
+// HOCS 
+import WithSpinner from "../../components/with-spinner/with-spinner.component";
+const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
+const CollectionsPageWithSpinner = WithSpinner(CollectionPage);
+
+
 class ShopPage extends React.Component {
+
+  state = {
+    loading : true 
+  }
+
   unsubscribeFromSnapshot = null;
 
   componentDidMount() {
-
     const {updateCollections} = this.props ;
 
     // ! get collections from firebase 
@@ -23,19 +33,18 @@ class ShopPage extends React.Component {
 
     collectionRef.onSnapshot(async (snapshot) => {
       const collectionMap = convertCollectionsSnapshotToMap(snapshot) ;
-      
       // update store with new collections from firestore
       updateCollections(collectionMap) ;
+      this.setState({loading : false}) ;
     });
-
   }
 
   render() {
     return (
       <div className="shop-page">
         <Routes>
-          <Route path="/" element={<CollectionsOverview />} />
-          <Route path="/:categoryId" element={<CollectionPage />} />
+          <Route path="/" element={<CollectionsOverviewWithSpinner isLoading={this.state.loading} />} />
+          <Route path="/:categoryId" element={<CollectionsPageWithSpinner isLoading={this.state.loading} />} />
         </Routes>
       </div>
     );

@@ -12,5 +12,5 @@ export const selectShopCollections = createSelector(
 
 export const selectShopCollectionsToArrays = createSelector(
     selectShop , 
-    (shop) => Object.values(shop.collections)
+    (shop) => (shop.collections ? Object.values(shop.collections) : null)
 )
