@@ -14,3 +14,15 @@ export const selectShopCollectionsToArrays = createSelector(
     selectShop , 
     (shop) => (shop.collections ? Object.values(shop.collections) : null)
 )
+
+// ! select if shop is fetching data
+
+export const selectIsfetching = createSelector(
+    selectShop ,
+    (shop) => shop.isFetching 
+)
+
+export const selectIsCollectionsLoaded = createSelector(
+    selectShop ,
+    (shop) => !!shop.collections 
+) 
