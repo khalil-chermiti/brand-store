@@ -13,7 +13,7 @@ export const selectCartItems = createSelector(
 // ! selecting the items count
 export const selectCartCount = createSelector(
     [selectCartItems] ,
-    (items) => items.reduce((acc , item) => {return acc + item.quantity }, 0)
+    (items) => items ? items.reduce((acc , item) => {return acc + item.quantity }, 0) : []
 )
 
 // ! selecting the cart.hidden property 
