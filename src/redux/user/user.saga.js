@@ -41,9 +41,6 @@ export function* signInWithEmail({ payload: { email, password } }) {
     }
 }
 
-// TODO : FIX THIS FUNCTION 
-// WATCH THE PREVIOUS VIDEO ABOUT REFACTORING 
-// GET_USER_SNAPSHOT FUNCTION 
 export function* isUserAuthenticated() {
     try {
         const userAuth = yield getCurrentUser();
