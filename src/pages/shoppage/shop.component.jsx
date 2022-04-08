@@ -3,8 +3,8 @@ import  {Routes , Route } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { selectIsCollectionsLoaded , selectIsfetching } from '../../redux/shop/shop.selectors'
-import { fetchCollectionsStartAsync } from "../../redux/shop/shop.actions";
+import { selectIsCollectionsLoaded , selectIsfetching } from '../../redux/shop/shop.selectors';
+import { fetchCollectionsStart } from "../../redux/shop/shop.actions";
 
 import CollectionsOverview from "../../components/collections-overview/collections-overview.component";
 import CollectionPage from "../collectionpage/collection.component";
@@ -20,8 +20,8 @@ const CollectionsPageWithSpinner = WithSpinner(CollectionPage);
 class ShopPage extends React.Component {
 
   componentDidMount() {
-    const { fetchCollectionsAsync } = this.props ;
-    fetchCollectionsAsync() ;
+    const { fetchCollectionsStart} = this.props ;
+    fetchCollectionsStart() ;
   }
   
   // ! we need to check if collections data is loaded before we render any component  
@@ -58,7 +58,8 @@ const mapState = createStructuredSelector({
 })
 
 const mapDispatch = dispatch => ({
-  fetchCollectionsAsync : () => dispatch(fetchCollectionsStartAsync()) ,
+  fetchCollectionsStart: () => dispatch(fetchCollectionsStart()) ,
 })
 
 export default connect(mapState , mapDispatch)(ShopPage);
+

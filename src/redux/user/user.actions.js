@@ -1,10 +1,30 @@
 import { userActionTypes } from "./user.types";
 
-// this function returns an action to be dispatched to state 
 
-const setCurrentUser = user => ({
+export const setCurrentUser = user => ({
     type : userActionTypes.SET_CURRENT_USER ,
     payload : user 
 });
 
-export default setCurrentUser ;
+export const googleSignInStart = () => ({
+    type : userActionTypes.GOOGLE_SIGN_IN_START ,
+}) ; 
+
+export const emailSignInStart = (emailAndPassword) => ({
+    type : userActionTypes.EMAIL_SIGN_IN_START ,
+    payload : emailAndPassword ,
+}) ; 
+
+export const signInSuccess = (user) => ({
+    type : userActionTypes.SIGN_IN_SUCCESS ,
+    payload : user ,
+}) ; 
+
+export const signInFailure = (errorMessage) => ({
+    type : userActionTypes.SIGN_IN_FAILURE ,
+    payload : errorMessage ,
+}) ; 
+
+export const checkUserSession = () => ({
+    type : userActionTypes.CHECK_USER_SESSION ,
+})

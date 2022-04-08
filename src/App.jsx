@@ -3,7 +3,7 @@ import { Routes, Route , Navigate} from "react-router-dom";
 
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import setCurrentUser from "./redux/user/user.actions";
+import { checkUserSession } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selectors";
 
 import Header from "./components/header/header.component";
@@ -13,44 +13,13 @@ import SignINandUpPage from "./pages/signingpage/signing.component";
 import CheckoutPage from "./pages/checkoutpage/checkout.component";
 
 import "./App.css";
-import { auth , createUserProfileDocument } from "./firebase/firebase.utils";
 
 class App extends React.Component {
 
-  unSubscribeFromAuth = null;
-
   componentDidMount() {
-
-    // distructuring currentUser from props
-    const {setCurrentUser} = this.props ;
-
-    // OnAuthStateChange  returns a unsubscribe function 
-    this.unSubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
-
-      if(user) {
-
-        // creating user 
-        const userRef = await createUserProfileDocument(user) ;
-        
-        // on snapshot change we update state
-        userRef.onSnapshot(snapShot => {
-            setCurrentUser({
-              id: snapShot.id ,
-              ...snapShot.data()
-            })
-        });
-
-      }
-      
-      // if we get null object from firebase (user logged out or unsigned in)
-      setCurrentUser(user) ;
-    });
-  } 
-
-  componentWillUnmount() {
-    this.unSubscribeFromAuth() ;
+    const {checkUserSession} = this.props ;
+    checkUserSession();
   }
-
   render() {
     const {currentUser} = this.props ;
     return (
@@ -79,7 +48,7 @@ class App extends React.Component {
 
 // dispatching actions to props
 const mapDispatch = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+  checkUserSession : () => dispatch(checkUserSession()) ,
 });
 
 // get user object for conditionally render the signin page
