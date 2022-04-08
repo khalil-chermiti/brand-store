@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useEffect} from "react";
 import { Routes, Route , Navigate} from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -14,44 +14,39 @@ import CheckoutPage from "./pages/checkoutpage/checkout.component";
 
 import "./App.css";
 
-class App extends React.Component {
+const App = ({currentUser , checkUserSession}) => {
 
-  componentDidMount() {
-    const {checkUserSession} = this.props ;
-    checkUserSession();
-  }
-  render() {
-    const {currentUser} = this.props ;
-    return (
-      <div>
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="shop/*" element={<ShopPage />} />
-          <Route path="checkout" element={<CheckoutPage />} />
+  useEffect(() => {
+      checkUserSession();
+  } , [checkUserSession]);
 
-          <Route
-            path="signin"
-            element={
-              currentUser ? (
-                <Navigate to="/" replace={true} />
-              ) : (
-                <SignINandUpPage />
-              )
-            }
-          />
-        </Routes>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="shop/*" element={<ShopPage />} />
+        <Route path="checkout" element={<CheckoutPage />} />
 
-// dispatching actions to props
+        <Route
+          path="signin"
+          element={
+            currentUser ? (
+              <Navigate to="/" replace={true} />
+            ) : (
+              <SignINandUpPage />
+            )
+          }
+        />
+      </Routes>
+    </div>
+  ); 
+};
+
 const mapDispatch = (dispatch) => ({
   checkUserSession : () => dispatch(checkUserSession()) ,
 });
 
-// get user object for conditionally render the signin page
 const mapState = createStructuredSelector({
   currentUser : selectCurrentUser ,
 })

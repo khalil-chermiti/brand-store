@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect}  from "react";
 import  {Routes , Route } from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -17,39 +17,37 @@ const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
 const CollectionsPageWithSpinner = WithSpinner(CollectionPage);
 
 
-class ShopPage extends React.Component {
+const ShopPage = ({fetchCollectionsStart , isFetching ,isCollectionsLoaded}) => {
 
-  componentDidMount() {
-    const { fetchCollectionsStart} = this.props ;
+  useEffect(() => {
     fetchCollectionsStart() ;
-  }
-  
-  // ! we need to check if collections data is loaded before we render any component  
-  render() {
-    const {isFetching ,isCollectionsLoaded} = this.props ;
-    return (
-      <div className="shop-page">
-        <Routes>
-          <Route 
-            path="/" 
-            element={ 
-              <CollectionsOverviewWithSpinner 
-                isLoading={!isCollectionsLoaded || isFetching} 
-              />} 
-          />
+  } , [fetchCollectionsStart]) ;
 
-          <Route 
-            path="/:categoryId" 
-            element={
-              <CollectionsPageWithSpinner 
-                isLoading={!isCollectionsLoaded || isFetching} 
-              />}
-            />
-            
-        </Routes>
-      </div>
-    );
-  }
+  // ! we need to check if collections data is loaded before we render any component  
+
+  return (
+    <div className="shop-page">
+      <Routes>
+        <Route 
+          path="/" 
+          element={ 
+            <CollectionsOverviewWithSpinner 
+              isLoading={!isCollectionsLoaded || isFetching} 
+            />} 
+        />
+
+        <Route 
+          path="/:categoryId" 
+          element={
+            <CollectionsPageWithSpinner 
+              isLoading={!isCollectionsLoaded || isFetching} 
+            />}
+          />
+          
+      </Routes>
+    </div>
+  );
+
 };
 
 const mapState = createStructuredSelector({
